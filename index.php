@@ -47,23 +47,23 @@ session_start();
 				<form class="form__sign" method="POST" action="./functions.php">
 					<div class="form__item">
 						<label class="form__item-label">Имя</label>
-						<input type="text" class="form__item-input" />
+						<input type="text" class="form__item-input" name="name" />
 					</div>
 					<div class="form__item">
 						<label class="form__item-label">Почта</label>
-						<input type="text" class="form__item-input" />
+						<input type="text" class="form__item-input" name="email" />
 					</div>
 					<div class="form__item">
 						<label class="form__item-label">Логин</label>
-						<input type="text" class="form__item-input" />
+						<input type="text" class="form__item-input" name="login" />
 					</div>
 					<div class="form__item">
 						<label class="form__item-label">Пароль</label>
-						<input type="text" class="form__item-input" />
+						<input type="text" class="form__item-input" name="password" />
 					</div>
 					<div class="form__item">
 						<label class="form__item-label">Подтвердите пароль</label>
-						<input type="text" class="form__item-input" />
+						<input type="text" class="form__item-input" name="confirm_password" />
 					</div>
 					<button class="form__sign-button" name="button__sign-up">
 						Регистрация
