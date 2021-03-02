@@ -1,27 +1,11 @@
 <?xml version="1.0" standalone="yes"?>
 <users>
-	<user>
-		<name>Mickle</name>
-		<email>zombisuki@gmail.com</email>
-		<login>Mixaker</login>
-		<password>Admin</password>
-	</user>
-	<user>
-		<name>Nicollas</name>
-		<email>Nic@gmail.com</email>
-		<login>Nic</login>
-		<password>Nic</password>
-	</user>
-	<user id="2">
-		<name>Josaph</name>
-		<email>Joe@gmail.com</email>
-		<login>Joe</login>
-		<password>Joe</password>
-	</user>
-	<user>
-		<name>Constantine</name>
-		<email>Constanta</email>
-		<login>Constantine</login>
-		<password>Constanta</password>
-	</user>
+	<user name="Mickle" email="zombisuki@gmail.com" login="Mixaker" password="Admin"/>
+	<user name="Nicollas" email="Nic@gmail.com" login="Nic" password="Nic"/>
+	<user name="Josaphhh" email="Joe@gmail.com" login="Joe" password="Joe"/>
+	<user name="Constantine" email="Constanta@gmail.com" login="Constantine" password="Constanta"/>
+	<user name="Test" email="TestT@gmail.com" login="Test" password="Test"/>
+	<user name="Test1" email="TestT1@gmail.com" login="Test1" password="Test1"/>
+	<user name="Test2" email="TestT2@gmail.com" login="Test2" password="Test2"/>
+	<user name="Test3" email="TestT3@gmail.com" login="Test3" password="Test3"/>
 </users>

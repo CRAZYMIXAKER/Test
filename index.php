@@ -17,6 +17,7 @@ session_start();
 <body>
 	<?php if (isset($_SESSION['Error'])) {
 		echo "<h2>" . $_SESSION['Error'] . "</h2>";
+		unset($_SESSION['Error']);
 	} elseif (isset($_SESSION['User'])) {
 		echo "<h2>", $_SESSION['User']['login'], ", ", $_SESSION['Message'], "</h2>";
 		unset($_SESSION['Message']);

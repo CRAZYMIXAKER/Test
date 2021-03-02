@@ -11,31 +11,18 @@ if (isset($_POST['button__sign-in'])) {
 		$xpath = new DomXPath($dom);
 		$xml = simplexml_load_file("db.xml");
 
-		$checkUser = $xpath->query("/users/user[login = '$login' and password = '$password']");
-
-
-		//XML выборка нескольких записей
-		foreach ($xml->item as $key => $val) {
-			echo $val->user->name . "<br />";
-		}
-
-		// $query = $xpath->query("/users/user[login = '$login' and password = '$password']");
-		// print_r($result);
-		$Q = $xpath->query("//user/name");
-		print_r($Q);
-
-		print_r($xml->user[0]->name);
-		// echo $query->name;
-		// 		print_r($query);
-		// print_r($result);
-
+		$checkUser = $xpath->query("/users/user[@login = '$login' and @password = '$password']");
 
 		if ($checkUser->length == 1) {
-			$_SESSION['User'] = [
-				"name" => "NAME",
-				"email" => "EMALI@gmail.com",
-				"login" => $login
-			];
+			$result = $xpath->query("/users/user[@login='$login']");
+
+			foreach ($result as $node) {
+				$_SESSION['User'] = [
+					"name" => $node->getAttribute('name'),
+					"email" => $node->getAttribute('email'),
+					"login" => $node->getAttribute('login')
+				];
+			}
 
 			$_SESSION['Message'] = "Вы успешно авторизовались!";
 			header('Location:index.php');
@@ -47,10 +34,6 @@ if (isset($_POST['button__sign-in'])) {
 		echo $_SESSION['Error'] = "Поля не должны быть пустыми или заполнены пробелами";
 	}
 } elseif (isset($_POST['button__sign-up'])) {
-
-	// 			// foreach ($result as $node) {
-	// 			// 	echo $node->tagName, "(ID = ", $node->getAttribute('id'), ")\n";
-	// 			// }
 
 	// 			// $result = $xpath->query('/users/user[name = "Joe"]');
 	// 			$T = $sxml->addchild('user');
@@ -65,3 +48,24 @@ if (isset($_POST['button__sign-in'])) {
 	// 			$sxml->saveXML('db.xml');
 
 }
+
+
+
+
+		// //XML выборка нескольких записей
+		// foreach ($xml->item as $key => $val) {
+		// 	echo $val->user->name . "<br />";
+		// }
+
+		// $query = $xpath->query("//user[login = '$login' and password = '$password']/name");
+		// print_r($query);
+
+		// echo 2;
+
+		// $T = $xml->addchild('user');
+		// $T->addAttribute('name', 'Test');
+		// $T->addAttribute('email', 'TestT@gmail.com');
+		// $T->addAttribute('login', 'T');
+		// $T->addAttribute('password', 'T');
+
+		// $xml->saveXML('db.xml');
