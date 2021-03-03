@@ -1,5 +1,5 @@
 <?php session_start();
-
+$salt = "sheu2o5n21p59m0";
 if (isset($_POST['button__sign-in'])) {
 	if (!empty(trim($_POST['login'])) && !empty(trim($_POST['password']))) {
 		$login = $_POST['login'];
@@ -9,8 +9,8 @@ if (isset($_POST['button__sign-in'])) {
 		$dom->load("db.xml");
 		$xpath = new DomXPath($dom);
 		$xml = simplexml_load_file("db.xml");
-
-		$checkUser = $xpath->query("/users/user[@login = '$login' and @password = '$password']");
+		$checkPassword = md5(md5($password) . $salt);
+		$checkUser = $xpath->query("/users/user[@login = '$login' and @password = '$checkPassword']");
 
 		if ($checkUser->length == 1) {
 			$result = $xpath->query("/users/user[@login='$login']");
@@ -46,23 +46,31 @@ if (isset($_POST['button__sign-in'])) {
 			$checkLogin = $xpath->query("/users/user[@login = '$login']");
 
 			if ($checkLogin->length == 0) {
-				$add = $xml->addchild('user');
-				$add->addAttribute('name', $_POST['name']);
-				$add->addAttribute('email', $_POST['email']);
-				$add->addAttribute('login', $_POST['login']);
-				$add->addAttribute('password', $_POST['password']);
-				$xml->saveXML('db.xml');
+				$email = $_POST['email'];
+				$checkEmail = $xpath->query("/users/user[@email = '$email']");
 
-				$_SESSION['User'] = [
-					"name" => $_POST['name'],
-					"email" => $_POST['email'],
-					"login" => $_POST['login']
-				];
+				if ($checkEmail->length == 0) {
+					$add = $xml->addchild('user');
+					$add->addAttribute('name', $_POST['name']);
+					$add->addAttribute('email', $_POST['email']);
+					$add->addAttribute('login', $_POST['login']);
+					$add->addAttribute('password', md5(md5($_POST['password']) . $salt));
+					$xml->saveXML('db.xml');
 
-				$_SESSION['Message'] = "Вы успешно зарегистрировались!";
-				header('Location:index.php');
+					$_SESSION['User'] = [
+						"name" => $_POST['name'],
+						"email" => $_POST['email'],
+						"login" => $_POST['login']
+					];
+
+					$_SESSION['Message'] = "Вы успешно зарегистрировались!";
+					header('Location:index.php');
+				} else {
+					$_SESSION['Error'] = "Пользователь, с такой почтой уже существует, выберите пожалуйста другую почту";
+					header('Location:index.php');
+				}
 			} else {
-				$_SESSION['Error'] = "Пользователь, с таким логином уже существует, выберите пожалуйста другой";
+				$_SESSION['Error'] = "Пользователь, с таким логином уже существует, выберите пожалуйста другой логин";
 				header('Location:index.php');
 			}
 		} else {
@@ -74,17 +82,3 @@ if (isset($_POST['button__sign-in'])) {
 		header('Location:index.php');
 	}
 }
-
-				// foreach ($xml->item as $key => $val) {
-				// 	echo $val->user->name . "<br />";
-				// }
-
-					// 			// $result = $xpath->query('/users/user[name = "Joe"]');
-	// 			$T = $sxml->addchild('user');
-	// 			$T->addchild('name', 'Constantine');
-	// 			$T->addchild('email', 'Constanta');
-	// 			$T->addchild('login', 'Constantine');
-	// 			$T->addchild('password', 'Constanta');
-	// 			// echo $sxml->asXML();
-	// 			// print_r($sxml);
-	// 			print_r($resultLogin->length, $resultPassword->length);

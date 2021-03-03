@@ -15,13 +15,7 @@ session_start();
 </head>
 
 <body>
-	<?php if (isset($_SESSION['Error'])) {
-		echo "<h2>" . $_SESSION['Error'] . "</h2>";
-		unset($_SESSION['Error']);
-	} elseif (isset($_SESSION['User'])) {
-		echo "<h2>", $_SESSION['User']['login'], ", ", $_SESSION['Message'], "</h2>";
-		unset($_SESSION['Message']);
-	} ?>
+	<?php if (!isset($_SESSION['User'])) : ?>
 	<div class="main">
 		<div class="main__title">
 			<a href="#" class="main__title-in">Авторизация</a>
@@ -32,11 +26,11 @@ session_start();
 				<form class="form__sign" method="POST" action="./functions.php">
 					<div class="form__item">
 						<label class="form__item-label">Логин</label>
-						<input type="text" class="form__item-input" name="login" minlength="2" required />
+						<input type="text" class="form__item-input" name="login" minlength="6" required />
 					</div>
 					<div class="form__item">
 						<label class="form__item-label">Пароль </label>
-						<input type="text" class="form__item-input" name="password" minlength="2" required />
+						<input type="text" class="form__item-input" name="password" minlength="6" required />
 					</div>
 					<button class="form__sign-button" name="button__sign-in">
 						Вход
@@ -47,23 +41,23 @@ session_start();
 				<form class="form__sign" method="POST" action="./functions.php">
 					<div class="form__item">
 						<label class="form__item-label">Имя</label>
-						<input type="text" class="form__item-input" name="name" />
+						<input type="text" class="form__item-input" name="name" max="2" required />
 					</div>
 					<div class="form__item">
 						<label class="form__item-label">Почта</label>
-						<input type="text" class="form__item-input" name="email" />
+						<input type="text" class="form__item-input" name="email" required />
 					</div>
 					<div class="form__item">
 						<label class="form__item-label">Логин</label>
-						<input type="text" class="form__item-input" name="login" />
+						<input type="text" class="form__item-input" name="login" required />
 					</div>
 					<div class="form__item">
 						<label class="form__item-label">Пароль</label>
-						<input type="text" class="form__item-input" name="password" />
+						<input type="text" class="form__item-input" name="password" minlength="6" required />
 					</div>
 					<div class="form__item">
 						<label class="form__item-label">Подтвердите пароль</label>
-						<input type="text" class="form__item-input" name="confirm_password" />
+						<input type="text" class="form__item-input" name="confirm_password" minlength="6" equired />
 					</div>
 					<button class="form__sign-button" name="button__sign-up">
 						Регистрация
@@ -72,8 +66,9 @@ session_start();
 			</div>
 		</div>
 	</div>
+	<?php else : ?>
 	<a href="logOut.php">Выход</a>
-
+	<?php endif; ?>
 	<script src="./scripts.js"></script>
 </body>
 
