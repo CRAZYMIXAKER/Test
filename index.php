@@ -15,7 +15,11 @@ session_start();
 </head>
 
 <body>
-	<?php if (!isset($_SESSION['User'])) : ?>
+	<?php if (isset($_SESSION['Message'])) : echo $_SESSION['Message'];
+		unset($_SESSION['Message']);
+	elseif (isset($_SESSION['Error'])) : echo $_SESSION['Error'];
+		unset($_SESSION['Error']);
+	elseif (!isset($_SESSION['User'])) : ?>
 	<div class="main">
 		<div class="main__title">
 			<a href="#" class="main__title-in">Авторизация</a>
@@ -26,11 +30,13 @@ session_start();
 				<form class="form__sign" method="POST" action="./functions.php">
 					<div class="form__item">
 						<label class="form__item-label">Логин</label>
-						<input type="text" class="form__item-input" name="login" minlength="6" required />
+						<input type="text" class="form__item-input" name="login" pattern="^[A-Za-zА-Яа-я0-9Ёё\s]{6,}" minlength="6"
+							required />
 					</div>
 					<div class="form__item">
 						<label class="form__item-label">Пароль </label>
-						<input type="text" class="form__item-input" name="password" minlength="6" required />
+						<input type="text" class="form__item-input" name="password" minlength="6"
+							pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$" required />
 					</div>
 					<button class="form__sign-button" name="button__sign-in">
 						Вход
@@ -41,23 +47,25 @@ session_start();
 				<form class="form__sign" method="POST" action="./functions.php">
 					<div class="form__item">
 						<label class="form__item-label">Имя</label>
-						<input type="text" class="form__item-input" name="name" max="2" required />
+						<input type="text" class="form__item-input" name="name" pattern="^[A-Za-zА-Яа-я0-9Ёё\s]{1,2}" required />
 					</div>
 					<div class="form__item">
 						<label class="form__item-label">Почта</label>
-						<input type="text" class="form__item-input" name="email" required />
+						<input type="email" class="form__item-input" name="email" placeholder="example@example.com" required />
 					</div>
-					<div class="form__item">
+					<div class=" form__item">
 						<label class="form__item-label">Логин</label>
-						<input type="text" class="form__item-input" name="login" required />
+						<input type="text" class="form__item-input" name="login" pattern="^[A-Za-zА-Яа-я0-9Ёё\s]{6,}" required />
 					</div>
 					<div class="form__item">
 						<label class="form__item-label">Пароль</label>
-						<input type="text" class="form__item-input" name="password" minlength="6" required />
+						<input type="password" class="form__item-input" name="password"
+							pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$" required />
 					</div>
 					<div class="form__item">
 						<label class="form__item-label">Подтвердите пароль</label>
-						<input type="text" class="form__item-input" name="confirm_password" minlength="6" equired />
+						<input type="password" class="form__item-input" name="confirm_password"
+							pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$" equired />
 					</div>
 					<button class="form__sign-button" name="button__sign-up">
 						Регистрация

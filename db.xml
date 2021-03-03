@@ -5,4 +5,7 @@
 	<user name="Josaphhh" email="Joe@gmail.com" login="Joe" password="Joe"/>
 	<user name="Constantine" email="Constanta@gmail.com" login="Constantine" password="Constanta"/>
 	<user name="Test" email="TestT@gmail.com" login="Test" password="Test"/>
-<user name="Gebali" email="Gebali@gmail.com" login="Gebali" password="f015824588a1fc3b509bb2eefc2df437"/></users>
+	<user name="Gebali" email="Gebali@gmail.com" login="Gebali" password="f015824588a1fc3b509bb2eefc2df437"/>
+	<user name="sda" email="sadasd" login="asdsad" password="3a85bcba889e60114eff9bb2cafc7e1e"/>
+	<user name="asdsad" email="asddasd@gmail.com" login="sadasd" password="fb92cdfbc742b0b1b8c14a3b3ed06469"/>
+</users>
