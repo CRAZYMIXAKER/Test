@@ -3,7 +3,10 @@ $salt = "sheu2o5n21p59m0";
 
 $responce = [
 	'res' => false,
-	'error' => ''
+	'error' => '',
+	'errorLogin' => '',
+	'errorEmail' => '',
+	'errorPassword' => ''
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -33,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 					}
 
 					$responce['res'] = true;
-					$responce['error'] = 'Success autorization';
 				} else {
 					$responce['error'] = 'Неправильный логин или пароль';
 				}
@@ -70,18 +72,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 							];
 
 							$responce['res'] = true;
-							$responce['error'] = 'Success registration';
 						} else {
-							$responce['error'] = 'Пользователь, с такой почтой уже существует, выберите пожалуйста другую почту';
-							// $_SESSION['Error_Email'] = "Пользователь, с такой почтой уже существует, выберите пожалуйста другую почту";
+							$responce['errorEmail'] = 'Пользователь, с такой почтой уже существует, выберите пожалуйста другую почту';
 						}
 					} else {
-						$responce['error'] = 'Пользователь, с таким логином уже существует, выберите пожалуйста другой логин';
-						// $_SESSION['Error_Login'] = "Пользователь, с таким логином уже существует, выберите пожалуйста другой логин";
+						$responce['errorLogin'] = 'Пользователь, с таким логином уже существует, выберите пожалуйста другой логин';
 					}
 				} else {
-					$responce['error'] = 'Пароли, должны быть одинаковыми';
-					// $_SESSION['Error_Password'] = "Пароли, должны быть одинаковыми";
+					$responce['errorPassword'] = 'Пароли, должны быть одинаковыми';
 				}
 			} else {
 				$responce['error'] = 'Поля не должны быть пустыми или заполнены пробелами';
