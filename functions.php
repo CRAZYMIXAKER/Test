@@ -1,84 +1,101 @@
 <?php session_start();
 $salt = "sheu2o5n21p59m0";
-if (isset($_POST['button__sign-in'])) {
-	if (!empty(trim($_POST['login'])) && !empty(trim($_POST['password']))) {
-		$login = $_POST['login'];
-		$password = $_POST['password'];
 
-		$dom = new DomDocument("1.0");
-		$dom->load("db.xml");
-		$xpath = new DomXPath($dom);
-		$xml = simplexml_load_file("db.xml");
-		$checkPassword = md5(md5($password) . $salt);
-		$checkUser = $xpath->query("/users/user[@login = '$login' and @password = '$checkPassword']");
+$responce = [
+	'res' => false,
+	'error' => ''
+];
 
-		if ($checkUser->length == 1) {
-			$result = $xpath->query("/users/user[@login='$login']");
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	if (isset($_POST['login_sign_in']) || isset($_POST['name'])) {
+		if (isset($_POST['login_sign_in']) && isset($_POST['password_sign_in'])) {
+			if (!empty(trim($_POST['login_sign_in'])) && !empty(trim($_POST['password_sign_in']))) {
 
-			foreach ($result as $node) {
-				$_SESSION['User'] = [
-					"name" => $node->getAttribute('name'),
-					"email" => $node->getAttribute('email'),
-					"login" => $node->getAttribute('login')
-				];
-			}
+				$xpath = workWithXPATH();
+				$xml = simplexml_load_file("db.xml");
 
-			$_SESSION['Message'] = "Вы успешно авторизовались!";
-			header('Location:index.php');
-		} else {
-			$_SESSION['Error'] = "Неправильный логин или пароль";
-			header("Location: index.php");
-		}
-	} else {
-		$_SESSION['Error'] = "Поля не должны быть пустыми или заполнены пробелами";
-		header('Location:index.php');
-	}
-} elseif (isset($_POST['button__sign-up'])) {
-	if (!empty(trim($_POST['name'])) && !empty(trim($_POST['email'])) && !empty(trim($_POST['login'])) && !empty(trim($_POST['password'])) && !empty(trim($_POST['confirm_password']))) {
-		if ($_POST['password'] == $_POST['confirm_password']) {
-			$login = $_POST['login'];
+				$login = trim($_POST['login_sign_in']);
+				$password = trim($_POST['password_sign_in']);
 
-			$dom = new DomDocument("1.0");
-			$dom->load("db.xml");
-			$xpath = new DomXPath($dom);
-			$xml = simplexml_load_file("db.xml");
 
-			$checkLogin = $xpath->query("/users/user[@login = '$login']");
+				$checkPassword = md5(md5($password) . $salt);
+				$checkUser = $xpath->query("/users/user[@login = '$login' and @password = '$checkPassword']");
 
-			if ($checkLogin->length == 0) {
-				$email = $_POST['email'];
-				$checkEmail = $xpath->query("/users/user[@email = '$email']");
+				if ($checkUser->length == 1) {
+					$result = $xpath->query("/users/user[@login='$login']");
 
-				if ($checkEmail->length == 0) {
-					$add = $xml->addchild('user');
-					$add->addAttribute('name', $_POST['name']);
-					$add->addAttribute('email', $_POST['email']);
-					$add->addAttribute('login', $_POST['login']);
-					$add->addAttribute('password', md5(md5($_POST['password']) . $salt));
-					$xml->saveXML('db.xml');
+					foreach ($result as $node) {
+						$_SESSION['User'] = [
+							"name" => $node->getAttribute('name'),
+							"email" => $node->getAttribute('email'),
+							"login" => $node->getAttribute('login')
+						];
+					}
 
-					$_SESSION['User'] = [
-						"name" => $_POST['name'],
-						"email" => $_POST['email'],
-						"login" => $_POST['login']
-					];
-
-					$_SESSION['Message'] = "Вы успешно зарегистрировались!";
-					header('Location:index.php');
+					$responce['res'] = true;
+					$responce['error'] = 'Success autorization';
 				} else {
-					$_SESSION['Error'] = "Пользователь, с такой почтой уже существует, выберите пожалуйста другую почту";
-					header('Location:index.php');
+					$responce['error'] = 'Неправильный логин или пароль';
 				}
 			} else {
-				$_SESSION['Error'] = "Пользователь, с таким логином уже существует, выберите пожалуйста другой логин";
-				header('Location:index.php');
+				$responce['error'] = 'Поля не должны быть пустыми или заполнены пробелами';
 			}
-		} else {
-			$_SESSION['Error'] = "Пароли, должны быть одинаковыми";
-			header('Location:index.php');
+		} elseif (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['login']) && isset($_POST['password']) && isset($_POST['confirm_password'])) {
+			if (!empty(trim($_POST['name'])) && !empty(trim($_POST['email'])) && !empty(trim($_POST['login'])) && !empty(trim($_POST['password'])) && !empty(trim($_POST['confirm_password']))) {
+				if ($_POST['password'] == $_POST['confirm_password']) {
+
+					$xpath = workWithXPATH();
+					$xml = simplexml_load_file("db.xml");
+
+					$login = trim($_POST['login']);
+
+					$checkLogin = $xpath->query("/users/user[@login = '$login']");
+
+					if ($checkLogin->length == 0) {
+						$email = $_POST['email'];
+						$checkEmail = $xpath->query("/users/user[@email = '$email']");
+
+						if ($checkEmail->length == 0) {
+							$add = $xml->addchild('user');
+							$add->addAttribute('name', $_POST['name']);
+							$add->addAttribute('email', $_POST['email']);
+							$add->addAttribute('login', $_POST['login']);
+							$add->addAttribute('password', md5(md5($_POST['password']) . $salt));
+							$xml->saveXML('db.xml');
+
+							$_SESSION['User'] = [
+								"name" => $_POST['name'],
+								"email" => $_POST['email'],
+								"login" => $_POST['login']
+							];
+
+							$responce['res'] = true;
+							$responce['error'] = 'Success registration';
+						} else {
+							$responce['error'] = 'Пользователь, с такой почтой уже существует, выберите пожалуйста другую почту';
+							// $_SESSION['Error_Email'] = "Пользователь, с такой почтой уже существует, выберите пожалуйста другую почту";
+						}
+					} else {
+						$responce['error'] = 'Пользователь, с таким логином уже существует, выберите пожалуйста другой логин';
+						// $_SESSION['Error_Login'] = "Пользователь, с таким логином уже существует, выберите пожалуйста другой логин";
+					}
+				} else {
+					$responce['error'] = 'Пароли, должны быть одинаковыми';
+					// $_SESSION['Error_Password'] = "Пароли, должны быть одинаковыми";
+				}
+			} else {
+				$responce['error'] = 'Поля не должны быть пустыми или заполнены пробелами';
+			}
 		}
-	} else {
-		$_SESSION['Error'] = "Поля не должны быть пустыми или заполнены пробелами";
-		header('Location:index.php');
 	}
 }
+
+function workWithXPATH()
+{
+	$dom = new DomDocument("1.0");
+	$dom->load("db.xml");
+	$xpath = new DomXPath($dom);
+	return $xpath;
+}
+
+echo json_encode($responce);
