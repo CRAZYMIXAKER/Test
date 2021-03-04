@@ -88,7 +88,6 @@ session_start();
 	let formSignIn = document.querySelector('.sign_in');
 	let formSignUp = document.querySelector('.sign_up');
 	let errorBox = document.querySelector('.err');
-	let main = document.querySelector('.main')
 	let errorBoxLogin = document.querySelector('.errLogin');
 	let errorBoxEmail = document.querySelector('.errEmail');
 	let errorBoxPassword = document.querySelector('.errPassword');
@@ -106,12 +105,12 @@ session_start();
 			.then(data => {
 				if (data.res) {
 					location.href = location.href;
-					// main.innerHTML = 'Hello, ';
 				} else {
 					errorBox.innerHTML = data.error;
 				}
 			})
 	});
+
 
 	formSignUp.addEventListener('submit', function(e) {
 		e.preventDefault();
@@ -125,8 +124,7 @@ session_start();
 			.then(responce => responce.json())
 			.then(data => {
 				if (data.res) {
-					location.href = location.href;
-					// main.innerHTML = 'Helloasd';
+					location.reload()
 				} else {
 					errorBox.innerHTML = data.error;
 					errorBoxLogin.innerHTML = data.errorLogin;
