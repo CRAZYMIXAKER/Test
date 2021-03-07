@@ -56,10 +56,6 @@ class CRUD
 	{
 	}
 
-	public function allUsers()
-	{
-	}
-
 	public function workWithXPATH()
 	{
 		$dom = new DomDocument("1.0");

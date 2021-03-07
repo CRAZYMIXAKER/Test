@@ -9,7 +9,7 @@ session_start();
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Test</title>
 	<script src="./jquery-3.5.1.min.js"></script>
-	<link rel="shortcut icon" href="./test.png" type="image/png" />
+	<link rel="shortcut icon" href="./img/test.png" type="image/png" />
 	<link rel="stylesheet" href="./main.css" />
 </head>
 
@@ -87,10 +87,12 @@ session_start();
 		<table class="Table">
 			<thead>
 				<tr>
+					<th></th>
 					<th>Имя</th>
 					<th>Почта</th>
 					<th>Логин</th>
 					<th>Уровень Доступа</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -101,6 +103,8 @@ session_start();
 						for ($i = 0; $i < $countUsers; $i++) :
 						?>
 				<tr>
+					<td><a href="http://dp/MapHouse.php?EditFlat=' . $rowFlat['IDFlat'] . '"
+							title="Изменить данные пользователя"><img src="./img/Edit.png"></a></td>
 					<td>
 						<? echo $xpath->query("/users/user")[$i]->getAttribute('name')?>
 					</td>
@@ -114,6 +118,10 @@ session_start();
 					</td>
 					<td>
 						<? if($xpath->query("/users/user")[$i]->getAttribute('access')==1) : echo " Админ"; else : echo "Пользователь" ; endif;?>
+					</td>
+					<td><a title=" Удалить пользователя"
+							href="http://dp/EditFlat.php?DeleteFlat=' . $rowFlat['IDFlat'] . '&NameFlat=' . $rowFlat['IDFlat'] . '"><img
+								src="./img/Delete.png"></a>
 					</td>
 				</tr>
 				<?php endfor; ?>

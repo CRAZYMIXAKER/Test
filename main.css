@@ -10,7 +10,7 @@ body a {
 
 body {
   flex: 1;
-  background: url('./bg.jpg') center center / 250px;
+  background: url('./img/bg.jpg') center center / 250px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: flex;
