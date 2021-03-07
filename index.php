@@ -1,4 +1,4 @@
-<?php
+<?php include_once('./crud.php');
 session_start();
 ?>
 <!DOCTYPE html>
@@ -94,26 +94,37 @@ session_start();
 				</tr>
 			</thead>
 			<tbody>
+				<?php
+						$crud = new CRUD();
+						$xpath = $crud->xpath;
+						$countUsers = $xpath->query("/users/user")->length;
+						for ($i = 0; $i < $countUsers; $i++) :
+						?>
 				<tr>
 					<td>
-						<? echo $_SESSION['User']['name'];?>
+						<? echo $xpath->query("/users/user")[$i]->getAttribute('name')?>
 					</td>
 					<td>
-						<? echo $_SESSION['User']['email'];?>
+						<? echo $xpath->query("/users/user")[$i]->getAttribute('email')?>
 					</td>
 					<td>
 						<a href="/index.php?login=asdadsa">
-							<? echo $_SESSION['User']['login'];?>
+							<? echo $xpath->query("/users/user")[$i]->getAttribute('login')?>
 						</a>
 					</td>
 					<td>
-						<? if($_SESSION['User']['access']==1) : echo " Админ"; else : echo "Пользователь" ; endif;?>
+						<? if($xpath->query("/users/user")[$i]->getAttribute('access')==1) : echo " Админ"; else : echo "Пользователь" ; endif;?>
 					</td>
 				</tr>
+				<?php endfor; ?>
 			</tbody>
 		</table>
 	</div>
 	<!-- else : echo "Ваш уровень доступа = " . "0" -->
+	<?php else : ?>
+	<h2>
+		<?php echo "Ваш уровень доступа = " . "0"; ?>
+	</h2>
 	<?php endif; ?>
 	<a href="logOut.php">Выход</a>
 	<?php endif; ?>

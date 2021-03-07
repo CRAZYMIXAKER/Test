@@ -1,15 +1,9 @@
 <?php session_start();
 include_once("crud.php");
-$salt = "sheu2o5n21p59m0";
-$xml = simplexml_load_file("db.xml");
 
-function workWithXPATH()
-{
-	$dom = new DomDocument("1.0");
-	$dom->load("db.xml");
-	$xpath = new DomXPath($dom);
-	return $xpath;
-}
+$workWithXML = new CRUD();
+$xpath = $workWithXML->xpath;
+$salt = $workWithXML->salt;
 
 $responce = [
 	'res' => false,
@@ -20,18 +14,17 @@ $responce = [
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
 	if (isset($_POST['login_sign_in']) || isset($_POST['name'])) {
 		if (isset($_POST['login_sign_in']) && isset($_POST['password_sign_in'])) {
 			if (!empty(trim($_POST['login_sign_in'])) && !empty(trim($_POST['password_sign_in']))) {
-				$xpath = workWithXPATH();
 				$login = trim($_POST['login_sign_in']);
 				$password = trim($_POST['password_sign_in']);
-
 				$checkPassword = md5(md5($password) . $salt);
 				$checkUser = $xpath->query("/users/user[@login = '$login' and @password = '$checkPassword']");
 				if ($checkUser->length == 1) {
-					$crudRead = new CRUD($login, $xpath);
-					$crudRead->readUser();
+					$crudRead = new CRUD();
+					$crudRead->readUser($login);
 					$responce['res'] = true;
 				} else {
 					$responce['error'] = 'Неправильный логин или пароль';
@@ -42,18 +35,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		} elseif (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['login']) && isset($_POST['password']) && isset($_POST['confirm_password'])) {
 			if (!empty(trim($_POST['name'])) && !empty(trim($_POST['email'])) && !empty(trim($_POST['login'])) && !empty(trim($_POST['password'])) && !empty(trim($_POST['confirm_password']))) {
 				if ($_POST['password'] == $_POST['confirm_password']) {
-
-					$xpath = workWithXPATH();
-
 					$login = trim($_POST['login']);
-
 					$checkLogin = $xpath->query("/users/user[@login = '$login']");
 					if ($checkLogin->length == 0) {
 						$email = $_POST['email'];
 						$checkEmail = $xpath->query("/users/user[@email = '$email']");
-
 						if ($checkEmail->length == 0) {
-							$crudAdd = new CRUD($login, $xpath);
+							$crudAdd = new CRUD();
 							$crudAdd->createUser();
 							$responce['res'] = true;
 						} else {

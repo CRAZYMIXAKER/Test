@@ -2,16 +2,14 @@
 
 class CRUD
 {
-	protected $salt = "sheu2o5n21p59m0";
-	protected $password;
+	public $salt = "sheu2o5n21p59m0";
 	public $login;
 	public $xpath;
 	public $xml;
 
-	public function __construct($login, $xpath)
+	public function __construct()
 	{
-		$this->login = $login;
-		$this->xpath = $xpath;
+		$this->xpath = $this->workWithXPATH();
 		$this->xml = simplexml_load_file("db.xml");
 	}
 
@@ -28,14 +26,16 @@ class CRUD
 		$_SESSION['User'] = [
 			"name" => $_POST['name'],
 			"email" => $_POST['email'],
-			"login" => $_POST['login']
+			"login" => $_POST['login'],
+			"access" => 0
 		];
 
 		return $_SESSION['User'];
 	}
 
-	public function readUser()
+	public function readUser($login)
 	{
+		$this->login = $login;
 		$result = $this->xpath->query("/users/user[@login='$this->login']");
 		foreach ($result as $node) {
 			$_SESSION['User'] = [
@@ -54,5 +54,17 @@ class CRUD
 
 	public function deleteUser()
 	{
+	}
+
+	public function allUsers()
+	{
+	}
+
+	public function workWithXPATH()
+	{
+		$dom = new DomDocument("1.0");
+		$dom->load("db.xml");
+		$xpath = new DomXPath($dom);
+		return $xpath;
 	}
 }
