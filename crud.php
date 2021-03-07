@@ -48,12 +48,17 @@ class CRUD
 		}
 	}
 
-	public function updateUser()
+	public function updateUser($login)
 	{
+		$this->login = $login;
 	}
 
-	public function deleteUser()
+	public function deleteUser($login)
 	{
+		$this->login = $login;
+		$result = $this->xml->xpath("//user[@login='$this->login']");
+		unset($result[0][0]);
+		$this->xml->asXML('db.xml');
 	}
 
 	public function workWithXPATH()

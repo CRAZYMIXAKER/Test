@@ -9,6 +9,7 @@ session_start();
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Test</title>
 	<script src="./jquery-3.5.1.min.js"></script>
+	<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
 	<link rel="shortcut icon" href="./img/test.png" type="image/png" />
 	<link rel="stylesheet" href="./main.css" />
 </head>
@@ -87,12 +88,12 @@ session_start();
 		<table class="Table">
 			<thead>
 				<tr>
-					<th></th>
+					<th>Edit</th>
 					<th>Имя</th>
 					<th>Почта</th>
 					<th>Логин</th>
 					<th>Уровень Доступа</th>
-					<th></th>
+					<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -103,8 +104,10 @@ session_start();
 						for ($i = 0; $i < $countUsers; $i++) :
 						?>
 				<tr>
-					<td><a href="http://dp/MapHouse.php?EditFlat=' . $rowFlat['IDFlat'] . '"
-							title="Изменить данные пользователя"><img src="./img/Edit.png"></a></td>
+					<td><a title="Изменить данные пользователя"
+							href="./functions.php?updateLogin=<?php echo $xpath->query('/users/user')[$i]->getAttribute('login') ?>">
+							<img src="./img/Edit.png"></a>
+					</td>
 					<td>
 						<? echo $xpath->query("/users/user")[$i]->getAttribute('name')?>
 					</td>
@@ -112,26 +115,31 @@ session_start();
 						<? echo $xpath->query("/users/user")[$i]->getAttribute('email')?>
 					</td>
 					<td>
-						<a href="/index.php?login=asdadsa">
-							<? echo $xpath->query("/users/user")[$i]->getAttribute('login')?>
-						</a>
+						<? echo $xpath->query("/users/user")[$i]->getAttribute('login')?>
 					</td>
 					<td>
 						<? if($xpath->query("/users/user")[$i]->getAttribute('access')==1) : echo " Админ"; else : echo "Пользователь" ; endif;?>
 					</td>
 					<td><a title=" Удалить пользователя"
-							href="http://dp/EditFlat.php?DeleteFlat=' . $rowFlat['IDFlat'] . '&NameFlat=' . $rowFlat['IDFlat'] . '"><img
-								src="./img/Delete.png"></a>
+							href="./functions.php?deleteLogin=<?php echo $xpath->query('/users/user')[$i]->getAttribute('login') ?>">
+							<img src=" ./img/Delete.png"></a>
 					</td>
 				</tr>
 				<?php endfor; ?>
 			</tbody>
 		</table>
 	</div>
-	<!-- else : echo "Ваш уровень доступа = " . "0" -->
+	<!-- else : echo " Ваш уровень доступа=" . " 0" -->
 	<?php else : ?>
 	<h2>
 		<?php echo "Ваш уровень доступа = " . "0"; ?>
+	</h2>
+	<?php endif; ?>
+
+	<?php if (isset($_SESSION['Error'])) : ?>
+	<h2 class="error">
+		<?php echo $_SESSION['Error'];
+				unset($_SESSION['Error']); ?>
 	</h2>
 	<?php endif; ?>
 	<a href="logOut.php">Выход</a>
@@ -140,23 +148,22 @@ session_start();
 	<script src="./scripts.js"></script>
 
 	<script>
-	let formSignIn = document.querySelector('.sign_in');
+	let formSignIn = document.querySelector(' .sign_in');
 	let formSignUp = document.querySelector('.sign_up');
-	let errorBox = document.querySelector('.err');
+	let
+		errorBox = document.querySelector('.err');
 	let errorBoxLogin = document.querySelector('.errLogin');
-	let errorBoxEmail = document.querySelector('.errEmail');
-	let errorBoxPassword = document.querySelector('.errPassword');
-
+	let
+		errorBoxEmail = document.querySelector('.errEmail');
+	let
+		errorBoxPassword = document.querySelector('.errPassword');
 	formSignIn.addEventListener('submit', function(e) {
 		e.preventDefault();
-
 		let formData = new FormData(formSignIn);
-
 		fetch('functions.php', {
 				method: 'POST',
 				body: formData
-			})
-			.then(responce => responce.json())
+			}).then(responce => responce.json())
 			.then(data => {
 				if (data.res) {
 					location.href = location.href;
@@ -192,3 +199,7 @@ session_start();
 </body>
 
 </html>
+<!-- echo "<script>
+swal('', '" . $_SESSION['
+	Message '] . "', 'success')
+</script>"; -->
