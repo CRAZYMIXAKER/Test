@@ -16,7 +16,10 @@ session_start();
 
 <body>
 
-	<?php if (!isset($_SESSION['User'])) : ?>
+	<?php if (!isset($_COOKIE["Login"])) {
+		unset($_SESSION['User']);
+	};
+	if (!isset($_SESSION['User'])) : ?>
 	<div class="main" id="SingInUp">
 		<div class="main__title">
 			<a href="#" class="main__title-in">Авторизация</a>
@@ -184,6 +187,7 @@ session_start();
 	<script src="./scripts.js"></script>
 
 	<script>
+	setTimeout("window.location.reload()", 36000);
 	let formSignIn = document.querySelector(' .sign_in');
 	let formSignUp = document.querySelector('.sign_up');
 	let formSignEdit = document.querySelector('.sign_edite');
