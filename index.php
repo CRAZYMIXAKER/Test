@@ -17,7 +17,7 @@ session_start();
 <body>
 
 	<?php if (!isset($_SESSION['User'])) : ?>
-	<div class="main">
+	<div class="main" id="SingInUp">
 		<div class="main__title">
 			<a href="#" class="main__title-in">Авторизация</a>
 			<a href="#" class="main__title-up">Регистрация</a>
@@ -85,7 +85,7 @@ session_start();
 		<?php echo "Ваш уровень доступа = " . "1"; ?>
 	</h2>
 	<div>
-		<table class="Table">
+		<table class="Table" id="Table">
 			<thead>
 				<tr>
 					<th>Edit</th>
@@ -189,8 +189,11 @@ session_start();
 	let errorBoxEmail = document.querySelector('.errEmail');
 	let errorBoxPassword = document.querySelector('.errPassword');
 
-	if (typeof <?php echo json_encode($_SESSION['User']) ?> == "undefined") {
-
+	var elementSigInUp = document.getElementById('SingInUp');
+	if (!elementSigInUp) {
+		alert('меня нет на странице (SigInUp)');
+	} else {
+		alert('я присутствую (SigInUp)');
 		formSignIn.addEventListener('submit', function(e) {
 			e.preventDefault();
 			let formData = new FormData(formSignIn);
@@ -200,7 +203,8 @@ session_start();
 				}).then(responce => responce.json())
 				.then(data => {
 					if (data.res) {
-						location.href = location.href;
+						location.reload()
+						// location.href = location.href;
 					} else {
 						errorBox.innerHTML = data.error;
 					}
@@ -228,11 +232,13 @@ session_start();
 					}
 				})
 		});
-	} else {
-		console.log("YEST");
 	}
-	// document.querySelector(".form-edit").classList.contains('.window-edit__opened')
-	if (<?php echo json_encode($_SESSION['User']['access']) ?> == 1) {
+
+	var elementTable = document.getElementById('Table');
+	if (!elementTable) {
+		alert('меня нет на странице (Table)');
+	} else {
+		alert('я присутствую (Table)');
 		formSignEdit.addEventListener('submit', function(e) {
 			e.preventDefault();
 
@@ -245,7 +251,6 @@ session_start();
 				.then(responce => responce.json())
 				.then(data => {
 					if (data.res) {
-						// console.log("HELPLEH");
 						window.location.href = './index.php';
 						// location.reload()
 					} else {
@@ -256,11 +261,9 @@ session_start();
 				})
 		});
 	}
-	</script>
-	<script>
+
 	const formEdit = document.querySelector(".form-edit");
 	const bgEdit = document.querySelector(".bg-edit");
-
 	if (typeof <?php echo json_encode($_GET['updateName']) ?> !== "undefined") {
 		windowEditOpened();
 	};
@@ -269,12 +272,6 @@ session_start();
 		formEdit.classList.add("window-edit__opened");
 		bgEdit.classList.add("window-edit__opened");
 	}
-	// bgEdit.addEventListener("click", windowEditClosed);
-
-	// function windowEditClosed() {
-	// 	formEdit.classList.remove("window-edit__opened");
-	// 	bgEdit.classList.remove("window-edit__opened");
-	// }
 	</script>
 </body>
 

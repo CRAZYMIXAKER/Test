@@ -6,10 +6,12 @@ class CRUD
 	public $login;
 	public $xpath;
 	public $xml;
+	public $dom;
 
 	public function __construct()
 	{
-		$this->xpath = $this->workWithXPATH();
+		$this->dom = $this->workWithXPATH();
+		$this->xpath = new DOMXPath($this->dom);
 		$this->xml = simplexml_load_file("db.xml");
 	}
 
@@ -54,17 +56,14 @@ class CRUD
 		$name = $name;
 		$email = $email;
 		$loginMain = $loginMain;
-		$dom = new DomDocument("1.0");
-		$dom->load('db.xml');
-		$xpath = new DomXPath($dom);
 
-		foreach ($xpath->query("/users/user[@login='$loginMain']") as $item) {
+		foreach ($this->xpath->query("/users/user[@login='$loginMain']") as $item) {
 			$item->setAttribute('name', "$name");
 			$item->setAttribute('email', "$email");
 			$item->setAttribute('login', "$this->login");
 		}
 
-		$dom->save('db.xml');
+		$this->dom->save('db.xml');
 	}
 
 	public function deleteUser($login)
@@ -79,7 +78,6 @@ class CRUD
 	{
 		$dom = new DomDocument("1.0");
 		$dom->load("db.xml");
-		$xpath = new DomXPath($dom);
-		return $xpath;
+		return $dom;
 	}
 }
