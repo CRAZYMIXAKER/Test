@@ -35,14 +35,14 @@ session_start();
 						<input type="password" class="form__item-input" name="password_sign_in" minlength="6"
 							pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$" required />
 					</div>
-					<button class="form__sign-button" name="button__sign-in">
+					<button class="form__sign-button">
 						Вход
 					</button>
 					<p class="err error"></p>
 				</form>
 			</div>
 			<div class="form__sign-up form__sign--closed">
-				<form class="form__sign sign_up" method="POST" action="./functions.php">
+				<form class="form__sign sign_up" method="POST">
 					<div class="form__item">
 						<label class="form__item-label">Имя</label>
 						<input type="text" class="form__item-input" name="name" pattern="^[A-Za-zА-Яа-я0-9Ёё\s]{1,2}" required />
@@ -68,7 +68,7 @@ session_start();
 							pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$" equired />
 						<p class="errPassword error"></p>
 					</div>
-					<button class="form__sign-button" name="button__sign-up">
+					<button class="form__sign-button">
 						Регистрация
 					</button>
 					<p class="err error"></p>
@@ -105,7 +105,7 @@ session_start();
 						?>
 				<tr>
 					<td><a title="Изменить данные пользователя"
-							href="./functions.php?updateLogin=<?php echo $xpath->query('/users/user')[$i]->getAttribute('login') ?>">
+							href="./index.php?updateName=<?php echo $xpath->query('/users/user')[$i]->getAttribute('name') . "&updateEmail=" . $xpath->query('/users/user')[$i]->getAttribute('email') . "&updateLogin=" . $xpath->query('/users/user')[$i]->getAttribute('login') ?>">
 							<img src="./img/Edit.png"></a>
 					</td>
 					<td>
@@ -145,18 +145,48 @@ session_start();
 	<a href="logOut.php">Выход</a>
 	<?php endif; ?>
 
+	<div class="form-edit">
+		<div class="form__close"><a href="./index.php"><img src="./img/close.png"></a></div>
+		<form class="form__sign sign_edit" method="POST">
+			<div class="form__item">
+				<label class="form__item-label">Имя</label>
+				<input type="text" class="form__item-input" name="editName" pattern="^[A-Za-zА-Яа-я0-9Ёё\s]{1,2}"
+					value="<? echo $_GET['updateName']?>" required />
+			</div>
+			<div class="form__item">
+				<label class="form__item-label">Почта</label>
+				<input type="email" class="form__item-input" name="editEmail" placeholder="example@example.com"
+					value="<? echo $_GET['updateEmail']?>" required />
+				<p class="errEmail error"></p>
+			</div>
+			<div class=" form__item">
+				<label class="form__item-label">Логин</label>
+				<input type="text" class="form__item-input" name="editLogin" pattern="^[A-Za-zА-Яа-я0-9Ёё\s]{6,}"
+					value="<? echo $_GET['updateLogin']?>" required />
+				<p class="errLogin error"></p>
+			</div>
+			<button class="form__sign-button">
+				Изменить
+			</button>
+			<p class="err error"></p>
+		</form>
+	</div>
+	<a href="./index.php">
+		<div class="bg-edit"></div>
+	</a>
+
 	<script src="./scripts.js"></script>
 
 	<script>
 	let formSignIn = document.querySelector(' .sign_in');
 	let formSignUp = document.querySelector('.sign_up');
-	let
-		errorBox = document.querySelector('.err');
+	let formSignEdit = document.querySelector('.sign_edit');
+
+	let errorBox = document.querySelector('.err');
 	let errorBoxLogin = document.querySelector('.errLogin');
-	let
-		errorBoxEmail = document.querySelector('.errEmail');
-	let
-		errorBoxPassword = document.querySelector('.errPassword');
+	let errorBoxEmail = document.querySelector('.errEmail');
+	let errorBoxPassword = document.querySelector('.errPassword');
+
 	formSignIn.addEventListener('submit', function(e) {
 		e.preventDefault();
 		let formData = new FormData(formSignIn);
@@ -172,7 +202,6 @@ session_start();
 				}
 			})
 	});
-
 
 	formSignUp.addEventListener('submit', function(e) {
 		e.preventDefault();
@@ -195,6 +224,47 @@ session_start();
 				}
 			})
 	});
+
+	formSignEdit.addEventListener('submit', function(e) {
+		e.preventDefault();
+
+		let formData = new FormData(formSignEdit);
+
+		fetch('functions.php', {
+				method: 'POST',
+				body: formData
+			})
+			.then(responce => responce.json())
+			.then(data => {
+				if (data.res) {
+					console.log("HELP");
+					// location.reload()
+				} else {
+					errorBox.innerHTML = data.error;
+					errorBoxLogin.innerHTML = data.errorLogin;
+					errorBoxEmail.innerHTML = data.errorEmail;
+				}
+			})
+	});
+	</script>
+	<script>
+	const formEdit = document.querySelector(".form-edit");
+	const bgEdit = document.querySelector(".bg-edit");
+
+	if (typeof <?php echo json_encode($_GET['updateName']) ?> !== "undefined") {
+		windowEditOpened();
+	};
+
+	function windowEditOpened() {
+		formEdit.classList.add("window-edit__opened");
+		bgEdit.classList.add("window-edit__opened");
+	}
+	// bgEdit.addEventListener("click", windowEditClosed);
+
+	// function windowEditClosed() {
+	// 	formEdit.classList.remove("window-edit__opened");
+	// 	bgEdit.classList.remove("window-edit__opened");
+	// }
 	</script>
 </body>
 

@@ -51,6 +51,15 @@ class CRUD
 	public function updateUser($login)
 	{
 		$this->login = $login;
+		$dom = new DomDocument("1.0");
+		$dom->load('db.xml');
+		$xpath = new DomXPath($dom);
+
+		foreach ($xpath->query("/users/user[@login='$this->login']") as $item) {
+			$item->setAttribute('name', 'Aa');
+		}
+
+		$dom->save('db.xml');
 	}
 
 	public function deleteUser($login)

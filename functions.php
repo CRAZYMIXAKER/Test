@@ -14,7 +14,7 @@ $responce = [
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	if (isset($_POST['login_sign_in']) || isset($_POST['name'])) {
+	if (isset($_POST['login_sign_in']) || isset($_POST['name']) || isset($_POST['editName'])) {
 		if (isset($_POST['login_sign_in']) && isset($_POST['password_sign_in'])) {
 			if (!empty(trim($_POST['login_sign_in'])) && !empty(trim($_POST['password_sign_in']))) {
 				$login = trim($_POST['login_sign_in']);
@@ -55,16 +55,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			} else {
 				$responce['error'] = 'Поля не должны быть пустыми или заполнены пробелами';
 			}
+		} elseif (isset($_POST['editName']) && isset($_POST['editEmail']) && isset($_POST['editLogin'])) {
+			if (!empty(trim($_POST['editName'])) && !empty(trim($_POST['editEmail'])) && !empty(trim($_POST['editLogin']))) {
+				$responce['error'] = "sdfsdfsdf";
+				$crudUpdate = new CRUD();
+				$crudUpdate->updateUser($_POST['editLogin']);
+				$responce['res'] = true;
+				// echo "UPDATE";
+			} else {
+				$responce['error'] = 'Поля не должны быть пустыми или заполнены пробелами';
+			}
 		}
 	}
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
-	if (isset($_GET['updateLogin'])) {
-		$crudUpdate = new CRUD();
-		$crudUpdate->updateUser($_GET['updateLogin']);
-		$responce['res'] = true;
-		echo "UPDATE";
-		header("Location: index.php");
-	} elseif (isset($_GET['deleteLogin'])) {
+	if (isset($_GET['deleteLogin'])) {
 		if ($_SESSION['User']['login'] === $_GET['deleteLogin']) {
 			$_SESSION['Error'] = 'Вы не можете себя удалить';
 		} else {

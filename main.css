@@ -142,3 +142,27 @@ table a:hover {
   /* box-shadow: inset 0 -35px 0 #40382d, 2px 2px 3px rgba(0, 0, 0, 0.3);
   color: #decda5; */
 }
+
+
+.form-edit {
+  position: absolute;
+  display: none;
+  background: #fff;
+  padding: 30px;
+  z-index: 2;
+}
+
+.bg-edit {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.window-edit__opened {
+  display: block;
+}
