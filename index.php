@@ -147,6 +147,10 @@ session_start();
 
 	<div class="form-edit">
 		<div class="form__close"><a href="./index.php"><img src="./img/close.png"></a></div>
+		<p>Тут нет никакой валидации,</br>
+			не хотел захламлять код,</br>
+			хотел просто показать,</br>
+			что работает Update!</p>
 		<form class="form__sign sign_edite" method="POST">
 			<div class="form__item">
 				<label class="form__item-label">Имя</label>
@@ -190,10 +194,7 @@ session_start();
 	let errorBoxPassword = document.querySelector('.errPassword');
 
 	var elementSigInUp = document.getElementById('SingInUp');
-	if (!elementSigInUp) {
-		alert('меня нет на странице (SigInUp)');
-	} else {
-		alert('я присутствую (SigInUp)');
+	if (!elementSigInUp) {} else {
 		formSignIn.addEventListener('submit', function(e) {
 			e.preventDefault();
 			let formData = new FormData(formSignIn);
@@ -204,7 +205,6 @@ session_start();
 				.then(data => {
 					if (data.res) {
 						location.reload()
-						// location.href = location.href;
 					} else {
 						errorBox.innerHTML = data.error;
 					}
@@ -235,10 +235,7 @@ session_start();
 	}
 
 	var elementTable = document.getElementById('Table');
-	if (!elementTable) {
-		alert('меня нет на странице (Table)');
-	} else {
-		alert('я присутствую (Table)');
+	if (!elementTable) {} else {
 		formSignEdit.addEventListener('submit', function(e) {
 			e.preventDefault();
 
@@ -252,8 +249,9 @@ session_start();
 				.then(data => {
 					if (data.res) {
 						window.location.href = './index.php';
-						// location.reload()
 					} else {
+						console.log("AAAAAA");
+						console.log(data);
 						errorBox.innerHTML = data.error;
 						errorBoxLogin.innerHTML = data.errorLogin;
 						errorBoxEmail.innerHTML = data.errorEmail;
@@ -261,7 +259,8 @@ session_start();
 				})
 		});
 	}
-
+	</script>
+	<script>
 	const formEdit = document.querySelector(".form-edit");
 	const bgEdit = document.querySelector(".bg-edit");
 	if (typeof <?php echo json_encode($_GET['updateName']) ?> !== "undefined") {
@@ -276,7 +275,3 @@ session_start();
 </body>
 
 </html>
-<!-- echo "<script>
-swal('', '" . $_SESSION['
-	Message '] . "', 'success')
-</script>"; -->

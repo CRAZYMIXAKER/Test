@@ -60,8 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				$crudUpdate = new CRUD();
 				$crudUpdate->updateUser($_POST['editName'], $_POST['editEmail'], $_POST['editLogin'], $_POST['editLoginMain']);
 				$responce['res'] = true;
-				$responce['error'] = "sdfsdfsdf";
-				// echo "UPDATE";
 			} else {
 				$responce['error'] = 'Поля не должны быть пустыми или заполнены пробелами';
 			}

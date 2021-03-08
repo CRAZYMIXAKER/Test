@@ -46,6 +46,7 @@ class CRUD
 				"login" => $node->getAttribute('login'),
 				"access" => $node->getAttribute('access')
 			];
+			// setcookie("TestCookie", $$_SESSION['User'], time() + 10);
 			return $_SESSION['User'];
 		}
 	}
