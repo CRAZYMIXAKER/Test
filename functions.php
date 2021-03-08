@@ -57,10 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			}
 		} elseif (isset($_POST['editName']) && isset($_POST['editEmail']) && isset($_POST['editLogin'])) {
 			if (!empty(trim($_POST['editName'])) && !empty(trim($_POST['editEmail'])) && !empty(trim($_POST['editLogin']))) {
-				$responce['error'] = "sdfsdfsdf";
 				$crudUpdate = new CRUD();
-				$crudUpdate->updateUser($_POST['editLogin']);
+				$crudUpdate->updateUser($_POST['editName'], $_POST['editEmail'], $_POST['editLogin'], $_POST['editLoginMain']);
 				$responce['res'] = true;
+				$responce['error'] = "sdfsdfsdf";
 				// echo "UPDATE";
 			} else {
 				$responce['error'] = 'Поля не должны быть пустыми или заполнены пробелами';

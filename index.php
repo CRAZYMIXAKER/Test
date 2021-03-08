@@ -147,7 +147,7 @@ session_start();
 
 	<div class="form-edit">
 		<div class="form__close"><a href="./index.php"><img src="./img/close.png"></a></div>
-		<form class="form__sign sign_edit" method="POST">
+		<form class="form__sign sign_edite" method="POST">
 			<div class="form__item">
 				<label class="form__item-label">Имя</label>
 				<input type="text" class="form__item-input" name="editName" pattern="^[A-Za-zА-Яа-я0-9Ёё\s]{1,2}"
@@ -165,6 +165,8 @@ session_start();
 					value="<? echo $_GET['updateLogin']?>" required />
 				<p class="errLogin error"></p>
 			</div>
+			<input style=" visibility:collapse;" type="text" name="editLoginMain" value="<? echo $_GET['updateLogin']?>"
+				required />
 			<button class="form__sign-button">
 				Изменить
 			</button>
@@ -180,72 +182,80 @@ session_start();
 	<script>
 	let formSignIn = document.querySelector(' .sign_in');
 	let formSignUp = document.querySelector('.sign_up');
-	let formSignEdit = document.querySelector('.sign_edit');
+	let formSignEdit = document.querySelector('.sign_edite');
 
 	let errorBox = document.querySelector('.err');
 	let errorBoxLogin = document.querySelector('.errLogin');
 	let errorBoxEmail = document.querySelector('.errEmail');
 	let errorBoxPassword = document.querySelector('.errPassword');
 
-	formSignIn.addEventListener('submit', function(e) {
-		e.preventDefault();
-		let formData = new FormData(formSignIn);
-		fetch('functions.php', {
-				method: 'POST',
-				body: formData
-			}).then(responce => responce.json())
-			.then(data => {
-				if (data.res) {
-					location.href = location.href;
-				} else {
-					errorBox.innerHTML = data.error;
-				}
-			})
-	});
+	if (typeof <?php echo json_encode($_SESSION['User']) ?> == "undefined") {
 
-	formSignUp.addEventListener('submit', function(e) {
-		e.preventDefault();
+		formSignIn.addEventListener('submit', function(e) {
+			e.preventDefault();
+			let formData = new FormData(formSignIn);
+			fetch('functions.php', {
+					method: 'POST',
+					body: formData
+				}).then(responce => responce.json())
+				.then(data => {
+					if (data.res) {
+						location.href = location.href;
+					} else {
+						errorBox.innerHTML = data.error;
+					}
+				})
+		});
 
-		let formData = new FormData(formSignUp);
+		formSignUp.addEventListener('submit', function(e) {
+			e.preventDefault();
 
-		fetch('functions.php', {
-				method: 'POST',
-				body: formData
-			})
-			.then(responce => responce.json())
-			.then(data => {
-				if (data.res) {
-					location.reload()
-				} else {
-					errorBox.innerHTML = data.error;
-					errorBoxLogin.innerHTML = data.errorLogin;
-					errorBoxEmail.innerHTML = data.errorEmail;
-					errorBoxPassword.innerHTML = data.errorPassword;
-				}
-			})
-	});
+			let formData = new FormData(formSignUp);
 
-	formSignEdit.addEventListener('submit', function(e) {
-		e.preventDefault();
+			fetch('functions.php', {
+					method: 'POST',
+					body: formData
+				})
+				.then(responce => responce.json())
+				.then(data => {
+					if (data.res) {
+						location.reload()
+					} else {
+						errorBox.innerHTML = data.error;
+						errorBoxLogin.innerHTML = data.errorLogin;
+						errorBoxEmail.innerHTML = data.errorEmail;
+						errorBoxPassword.innerHTML = data.errorPassword;
+					}
+				})
+		});
+	} else {
+		console.log("YEST");
+	}
+	// document.querySelector(".form-edit").classList.contains('.window-edit__opened')
+	if (<?php echo json_encode($_SESSION['User']['access']) ?> == 1) {
+		formSignEdit.addEventListener('submit', function(e) {
+			e.preventDefault();
 
-		let formData = new FormData(formSignEdit);
+			let formData = new FormData(formSignEdit);
 
-		fetch('functions.php', {
-				method: 'POST',
-				body: formData
-			})
-			.then(responce => responce.json())
-			.then(data => {
-				if (data.res) {
-					console.log("HELP");
-					// location.reload()
-				} else {
-					errorBox.innerHTML = data.error;
-					errorBoxLogin.innerHTML = data.errorLogin;
-					errorBoxEmail.innerHTML = data.errorEmail;
-				}
-			})
-	});
+			fetch('functions.php', {
+					method: 'POST',
+					body: formData
+				})
+				.then(responce => responce.json())
+				.then(data => {
+					if (data.res) {
+						// console.log("HELPLEH");
+						window.location.href = './index.php';
+						// location.reload()
+					} else {
+						errorBox.innerHTML = data.error;
+						errorBoxLogin.innerHTML = data.errorLogin;
+						errorBoxEmail.innerHTML = data.errorEmail;
+					}
+				})
+		});
+	}
 	</script>
 	<script>
 	const formEdit = document.querySelector(".form-edit");

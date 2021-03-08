@@ -48,15 +48,20 @@ class CRUD
 		}
 	}
 
-	public function updateUser($login)
+	public function updateUser($name, $email, $login, $loginMain)
 	{
 		$this->login = $login;
+		$name = $name;
+		$email = $email;
+		$loginMain = $loginMain;
 		$dom = new DomDocument("1.0");
 		$dom->load('db.xml');
 		$xpath = new DomXPath($dom);
 
-		foreach ($xpath->query("/users/user[@login='$this->login']") as $item) {
-			$item->setAttribute('name', 'Aa');
+		foreach ($xpath->query("/users/user[@login='$loginMain']") as $item) {
+			$item->setAttribute('name', "$name");
+			$item->setAttribute('email', "$email");
+			$item->setAttribute('login', "$this->login");
 		}
 
 		$dom->save('db.xml');
