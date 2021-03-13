@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$crudDelete->deleteUser($_GET['deleteLogin']);
 			$responce['res'] = true;
 		}
-		header("Location: index.php");
+		header("Location: users.php?success=1");
 	}
 }
 
