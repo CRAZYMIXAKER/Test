@@ -1,5 +1,5 @@
 <?php session_start();
-include_once("crud.php");
+include_once("./crud.php");
 
 $workWithXML = new CRUD();
 $xpath = $workWithXML->xpath;

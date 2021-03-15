@@ -37,8 +37,8 @@ include_once('./crud.php');
 					for ($i = 0; $i < $countUsers; $i++) :
 					?>
 					<tr>
-						<td><a title="Изменить данные пользователя"
-								href="./users.php?updateName=<?php echo $xpath->query('/users/user')[$i]->getAttribute('name') . "&updateEmail=" . $xpath->query('/users/user')[$i]->getAttribute('email') . "&updateLogin=" . $xpath->query('/users/user')[$i]->getAttribute('login') ?>">
+						<td>
+							<a title="Изменить данные пользователя" href="./edituser.html">
 								<img src="./img/Edit.png"></a>
 						</td>
 						<td>
@@ -54,7 +54,7 @@ include_once('./crud.php');
 							<? if($xpath->query("/users/user")[$i]->getAttribute('access')==1) : echo " Админ"; else : echo "Пользователь" ; endif;?>
 						</td>
 						<td><a title=" Удалить пользователя"
-								href="./users.php?delete=<?php echo $xpath->query('/users/user')[$i]->getAttribute('login') . "&Name=" . $xpath->query('/users/user')[$i]->getAttribute('name') . "&Email=" . $xpath->query('/users/user')[$i]->getAttribute('email')  ?>">
+								href="./users.php?delete=<?php echo $xpath->query('/users/user')[$i]->getAttribute('login') ?>">
 								<img src=" ./img/Delete.png"></a>
 						</td>
 					</tr>

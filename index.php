@@ -9,6 +9,7 @@ session_start();
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Main</title>
 	<script src="./js/jquery-3.5.1.min.js"></script>
+	<script src="ajax.js"></script>
 	<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
 	<link rel="shortcut icon" href="./img/test.png" type="image/png" />
 	<link rel="stylesheet" href="./css/main.css" />
@@ -27,7 +28,7 @@ session_start();
 		</div>
 		<div class="form">
 			<div class="form__sign-in">
-				<form class="form__sign sign_in" method="POST">
+				<form class="form__sign sign_in" id="ajax_form" method="POST">
 					<div class="form__item">
 						<label class="form__item-label">Логин</label>
 						<input type="text" class="form__item-input" name="login_sign_in" pattern="^[A-Za-zА-Яа-я0-9Ёё\s]{6,}"
@@ -38,12 +39,13 @@ session_start();
 						<input type="password" class="form__item-input" name="password_sign_in" minlength="6"
 							pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$" required />
 					</div>
-					<button class="form__sign-button">
+					<button class="form__sign-button" id="btn">
 						Вход
 					</button>
 					<p class="err error"></p>
 				</form>
 			</div>
+			<div id="result_form"></div>
 			<div class="form__sign-up form__sign--closed">
 				<form class="form__sign sign_up" method="POST">
 					<div class="form__item">
@@ -100,55 +102,55 @@ session_start();
 	<script src="./js/scripts.js"></script>
 	<script>
 	setTimeout("window.location.reload()", 3600000);
-	let formSignIn = document.querySelector(' .sign_in');
-	let formSignUp = document.querySelector('.sign_up');
-	let formSignEdit = document.querySelector('.sign_edite');
+	// let formSignIn = document.querySelector(' .sign_in');
+	// let formSignUp = document.querySelector('.sign_up');
+	// let formSignEdit = document.querySelector('.sign_edite');
 
-	let errorBox = document.querySelector('.err');
-	let errorBoxLogin = document.querySelector('.errLogin');
-	let errorBoxEmail = document.querySelector('.errEmail');
-	let errorBoxPassword = document.querySelector('.errPassword');
+	// let errorBox = document.querySelector('.err');
+	// let errorBoxLogin = document.querySelector('.errLogin');
+	// let errorBoxEmail = document.querySelector('.errEmail');
+	// let errorBoxPassword = document.querySelector('.errPassword');
 
-	var elementSigInUp = document.getElementById('SingInUp');
-	if (!elementSigInUp) {} else {
-		formSignIn.addEventListener('submit', function(e) {
-			e.preventDefault();
-			let formData = new FormData(formSignIn);
-			fetch('functions.php', {
-					method: 'POST',
-					body: formData
-				}).then(responce => responce.json())
-				.then(data => {
-					if (data.res) {
-						location.reload()
-					} else {
-						errorBox.innerHTML = data.error;
-					}
-				})
-		});
+	// var elementSigInUp = document.getElementById('SingInUp');
+	// if (!elementSigInUp) {} else {
+	// 	formSignIn.addEventListener('submit', function(e) {
+	// 		e.preventDefault();
+	// 		let formData = new FormData(formSignIn);
+	// 		fetch('functions.php', {
+	// 				method: 'POST',
+	// 				body: formData
+	// 			}).then(responce => responce.json())
+	// 			.then(data => {
+	// 				if (data.res) {
+	// 					location.reload()
+	// 				} else {
+	// 					errorBox.innerHTML = data.error;
+	// 				}
+	// 			})
+	// 	});
 
-		formSignUp.addEventListener('submit', function(e) {
-			e.preventDefault();
+	// 	formSignUp.addEventListener('submit', function(e) {
+	// 		e.preventDefault();
 
-			let formData = new FormData(formSignUp);
+	// 		let formData = new FormData(formSignUp);
 
-			fetch('functions.php', {
-					method: 'POST',
-					body: formData
-				})
-				.then(responce => responce.json())
-				.then(data => {
-					if (data.res) {
-						location.reload()
-					} else {
-						errorBox.innerHTML = data.error;
-						errorBoxLogin.innerHTML = data.errorLogin;
-						errorBoxEmail.innerHTML = data.errorEmail;
-						errorBoxPassword.innerHTML = data.errorPassword;
-					}
-				})
-		});
-	}
+	// 		fetch('functions.php', {
+	// 				method: 'POST',
+	// 				body: formData
+	// 			})
+	// 			.then(responce => responce.json())
+	// 			.then(data => {
+	// 				if (data.res) {
+	// 					location.reload()
+	// 				} else {
+	// 					errorBox.innerHTML = data.error;
+	// 					errorBoxLogin.innerHTML = data.errorLogin;
+	// 					errorBoxEmail.innerHTML = data.errorEmail;
+	// 					errorBoxPassword.innerHTML = data.errorPassword;
+	// 				}
+	// 			})
+	// 	});
+	// }
 	</script>
 </body>
 
