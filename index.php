@@ -28,7 +28,7 @@ session_start();
 		</div>
 		<div class="form">
 			<div class="form__sign-in">
-				<form class="form__sign sign_in" id="ajax_form" method="POST">
+				<form class="form__sign sign_in" method="POST">
 					<div class="form__item">
 						<label class="form__item-label">Логин</label>
 						<input type="text" class="form__item-input" name="login_sign_in" pattern="^[A-Za-zА-Яа-я0-9Ёё\s]{6,}"
@@ -39,13 +39,12 @@ session_start();
 						<input type="password" class="form__item-input" name="password_sign_in" minlength="6"
 							pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$" required />
 					</div>
-					<button class="form__sign-button" id="btn">
+					<button class="form__sign-button" id="btn_sign-in">
 						Вход
 					</button>
 					<p class="err error"></p>
 				</form>
 			</div>
-			<div id="result_form"></div>
 			<div class="form__sign-up form__sign--closed">
 				<form class="form__sign sign_up" method="POST">
 					<div class="form__item">
@@ -73,12 +72,13 @@ session_start();
 							pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$" equired />
 						<p class="errPassword error"></p>
 					</div>
-					<button class="form__sign-button">
+					<button class="form__sign-button" id="btn_sign-up">
 						Регистрация
 					</button>
 					<p class="err error"></p>
 				</form>
 			</div>
+			<div id="fatal_error"></div>
 		</div>
 	</div>
 	<?php else : ?>
