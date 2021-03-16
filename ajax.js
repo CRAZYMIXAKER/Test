@@ -1,11 +1,11 @@
 /* Article FructCode.com */
 $(document).ready(function () {
   $("#btn_sign-in").click(function () {
-    sendAjaxForm("result_form", "sign_in", "functions.php");
+    sendAjaxForm("result_form", "sign_in", "signIn.php");
     return false;
   });
   $("#btn_sign-up").click(function () {
-    sendAjaxForm("result_form", "sign_up", "registration.php");
+    sendAjaxForm("result_form", "sign_up", "signUp.php");
     return false;
   });
 });
@@ -28,11 +28,8 @@ function sendAjaxForm(result_form, ajax_form, url) {
       }
     },
     error: function (response) {
-      // Данные не отправлены
-      // errorBox.innerHTML = data.error;
       console.log("BAD");
       $("#fatal_error").html("Ошибка. Данные не отправлены.");
-      // $(".err").html(response.error);
     },
   });
 }
