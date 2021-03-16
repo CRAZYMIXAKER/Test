@@ -1,16 +1,15 @@
-/* Article FructCode.com */
 $(document).ready(function () {
   $("#btn_sign-in").click(function () {
-    sendAjaxForm("result_form", "sign_in", "signIn.php");
+    sendAjaxForm("sign_in", "signIn.php");
     return false;
   });
   $("#btn_sign-up").click(function () {
-    sendAjaxForm("result_form", "sign_up", "signUp.php");
+    sendAjaxForm("sign_up", "signUp.php");
     return false;
   });
 });
 
-function sendAjaxForm(result_form, ajax_form, url) {
+function sendAjaxForm(ajax_form, url) {
   $.ajax({
     url: url,
     type: "POST",

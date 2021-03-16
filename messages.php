@@ -68,6 +68,16 @@ function messagesValidateSignUp(array &$fields): array
 	// $fields['text'] = htmlspecialchars($fields['text']);
 }
 
+function messagesValidateDeleteUser(array &$fields): array
+{
+	$errors = [];
+
+	if ($_SESSION['User']['login'] === $_GET['deleteLogin']) {
+	}
+
+	return $errors;
+}
+
 function checkEmail(array &$fields)
 {
 	$workWithXML = new CRUD();

@@ -7,7 +7,7 @@ if (params.get("delete") != null) {
     dangerMode: true,
   }).then((willDelete) => {
     if (willDelete) {
-      window.location = "functions.php?deleteLogin=" + params.get("delete");
+      window.location = "deleteUser.php?deleteLogin=" + params.get("delete");
     } else {
       swal("Вы отменили удаление поьлзователя").then((willDelete) => {
         if (willDelete) {

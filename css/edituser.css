@@ -24,3 +24,7 @@ body {
   flex-direction: column;
   align-items: center;
 }
+
+.form {
+  margin-bottom: 45px;
+}
