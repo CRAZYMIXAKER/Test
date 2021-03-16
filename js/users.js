@@ -28,4 +28,14 @@ if (params.get("delete") != null) {
       window.location = "users.php";
     }
   });
+} else if (params.get("success") == 0) {
+  swal("Вы не можете себя удалить", {
+    icon: "error",
+  }).then((willDelete) => {
+    if (willDelete) {
+      window.location = "users.php";
+    } else {
+      window.location = "users.php";
+    }
+  });
 }

@@ -39,12 +39,6 @@
 
 // echo json_encode($responce);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	if (isset($_POST['name'])) {
-		print_r($_POST['name']);
-	}
-}
-
 	// } elseif (isset($_POST['editName']) && isset($_POST['editEmail']) && isset($_POST['editLogin'])) {
 	// 	if (!empty(trim($_POST['editName'])) && !empty(trim($_POST['editEmail'])) && !empty(trim($_POST['editLogin']))) {
 	// 		$crudUpdate = new CRUD();
