@@ -32,6 +32,64 @@ function messagesValidateSignIn(array &$fields): array
 	// $fields['text'] = htmlspecialchars($fields['text']);
 }
 
+function messagesValidateSignUp(array &$fields): array
+{
+	$errors = [];
+
+	if (empty($fields['name']) || empty($fields['email']) || empty($fields['login']) || empty($fields['password']) || empty($fields['confirm_password'])) {
+		$errors['Error'] = 'Поля не должны быть пустыми или заполнены пробелами!';
+	}
+
+	if (checkEmail($fields)->length != 0) {
+		$errors['Email'] = 'Пользователь, с такой почтой уже существует, выберите пожалуйста другую почту';
+	}
+
+	if (checkLogin($fields)->length != 0) {
+		$errors['Login'] = 'Пользователь, с таким логином уже существует, выберите пожалуйста другой логин';
+	}
+	if ($fields['password'] != $fields['confirm_password']) {
+		$errors['Password'] = 'Пароли, должны быть одинаковыми';
+	}
+
+	// if ($loginLen < 6) {
+	// 	$errors['Login'] = 'Логин не короче 6 символов!';
+	// }
+
+	// if ($loginLen > 15) {
+	// 	$errors['Login'] = 'Логин не длинее 15 символов!';
+	// }
+
+	// if ($passwordLen < 5) {
+	// 	$errors['Password'] = 'Пароль не короче 5 символов!';
+	// }
+
+	return $errors;
+	// $fields['name'] = htmlspecialchars($fields['name']);
+	// $fields['text'] = htmlspecialchars($fields['text']);
+}
+
+function checkEmail(array &$fields)
+{
+	$workWithXML = new CRUD();
+	$xpath = $workWithXML->xpath;
+
+	$email = $fields['email'];
+	$checkEmail = $xpath->query("/users/user[@email = '$email']");
+
+	return $checkEmail;
+}
+
+function checkLogin(array &$fields)
+{
+	$workWithXML = new CRUD();
+	$xpath = $workWithXML->xpath;
+
+	$login = $fields['login'];
+	$checkLogin = $xpath->query("/users/user[@login = '$login']");
+
+	return $checkLogin;
+}
+
 function checkUser(array &$fields)
 {
 	$workWithXML = new CRUD();

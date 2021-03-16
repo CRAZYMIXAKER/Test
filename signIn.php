@@ -33,7 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		if (isset($validateErrors['Password'])) {
 			$responce['errorPassword'] = $validateErrors['Password'];
 		}
-		// unset($responce);
 	}
 
 	// } elseif (isset($_POST['editName']) && isset($_POST['editEmail']) && isset($_POST['editLogin'])) {
