@@ -21,8 +21,9 @@ function sendAjaxForm(ajax_form, url) {
         location.reload();
       } else {
         $(".err").html(result.error);
-        $(".errLogin").html(result.errorLogin);
+        $(".errName").html(result.errorName);
         $(".errEmail").html(result.errorEmail);
+        $(".errLogin").html(result.errorLogin);
         $(".errPassword").html(result.errorPassword);
       }
     },

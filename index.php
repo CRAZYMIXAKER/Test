@@ -10,7 +10,6 @@ session_start();
 	<title>Main</title>
 	<script src="./js/jquery-3.5.1.min.js"></script>
 	<script src="ajax.js"></script>
-	<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
 	<link rel="shortcut icon" href="./img/test.png" type="image/png" />
 	<link rel="stylesheet" href="./css/main.css" />
 </head>
@@ -32,13 +31,11 @@ session_start();
 					<div class="form__item">
 						<label class="form__item-label">Логин</label>
 						<input type="text" class="form__item-input" name="login_sign_in" />
-						<!-- pattern="^[A-Za-zА-Яа-я0-9Ёё\s]{6,}" -->
 						<p class="errLogin error"></p>
 					</div>
 					<div class="form__item">
 						<label class="form__item-label">Пароль </label>
 						<input type="password" class="form__item-input" name="password_sign_in" />
-						<!-- pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$" -->
 						<p class="errPassword error">
 						</p>
 					</div>
@@ -53,6 +50,7 @@ session_start();
 					<div class="form__item">
 						<label class="form__item-label">Имя</label>
 						<input type="text" class="form__item-input" name="name" pattern="^[A-Za-zА-Яа-я0-9Ёё\s]{1,2}" required />
+						<p class="errName error"></p>
 					</div>
 					<div class="form__item">
 						<label class="form__item-label">Почта</label>
