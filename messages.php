@@ -29,7 +29,6 @@ function messagesValidateSignUp(array &$fields): array
 {
 	$errors = [];
 	$patternName = '/^[a-zA-Zа-яА-ЯЁё0-9]{2,2}$/u';
-	// $patternEmail = '/^[a-zA-Zа-яА-ЯЁё0-9]{2,2}$/u';
 	$patternLogin = '/^[a-zA-Zа-яА-ЯЁё0-9]{6,32}$/u';
 	$patternPassword = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,32}$$/u';
 
@@ -62,6 +61,30 @@ function messagesValidateSignUp(array &$fields): array
 
 	if (!preg_match($patternPassword, $fields['password'])) {
 		$errors['Password'] = 'Пароль, обязательно должен содержать цифру, буквы в разных регистрах и спец символ (знаки) и не быть короче 6 символов и длинее 32';
+	}
+
+	return $errors;
+}
+
+function messagesValidateEditUser(array &$fields): array
+{
+	$errors = [];
+	$patternName = '/^[a-zA-Zа-яА-ЯЁё0-9]{2,2}$/u';
+
+	if (empty($fields['name']) || empty($fields['email']) || empty($fields['login'])) {
+		$errors['Error'] = 'Поля не должны быть пустыми или заполнены пробелами!';
+	}
+
+	if (!preg_match($patternName, $fields['name'])) {
+		$errors['Name'] = 'Имя должно, состоять только из букв и цифр, и 2 символов';
+	}
+
+	if (checkEmail($fields)->length != 0) {
+		$errors['Email'] = 'Пользователь, с такой почтой уже существует, выберите пожалуйста другую почту';
+	}
+
+	if (!filter_var($fields['email'], FILTER_VALIDATE_EMAIL)) {
+		$errors['Email'] = 'Введите валидную почту';
 	}
 
 	return $errors;

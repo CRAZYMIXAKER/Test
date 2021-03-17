@@ -38,7 +38,8 @@ include_once('./crud.php');
 					?>
 					<tr>
 						<td>
-							<a title="Изменить данные пользователя" href="./edituser.html">
+							<a title="Изменить данные пользователя"
+								href="./editUser.php?updateName=<?php echo $xpath->query('/users/user')[$i]->getAttribute('name') . "&updateEmail=" . $xpath->query('/users/user')[$i]->getAttribute('email') . "&updateLogin=" . $xpath->query('/users/user')[$i]->getAttribute('login') ?>">
 								<img src="./img/Edit.png"></a>
 						</td>
 						<td>

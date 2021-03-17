@@ -26,5 +26,22 @@ body {
 }
 
 .form {
-  margin-bottom: 45px;
+  background: whitesmoke;
+  padding: 30px;
 }
+
+.error {
+  color: red;
+}
+
+.form__item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.form__item-label {
+  margin-bottom: 10px;
+}
+
+.form__item-input {}
