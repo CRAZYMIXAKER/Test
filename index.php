@@ -8,8 +8,8 @@ session_start();
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Main</title>
-	<script src="./js/jquery-3.5.1.min.js"></script>
-	<script src="ajax.js"></script>
+	<script src="./javaScript/jquery-3.5.1.min.js"></script>
+	<script src="./javaScript/ajax.js"></script>
 	<link rel="shortcut icon" href="./img/test.png" type="image/png" />
 	<link rel="stylesheet" href="./css/main.css" />
 </head>
@@ -100,7 +100,7 @@ session_start();
 	<a href="logOut.php">Выход</a>
 	<?php endif; ?>
 
-	<script src="./js/scripts.js"></script>
+	<script src="./javaScript/scripts.js"></script>
 	<script>
 	setTimeout("window.location.reload()", 3600000);
 	</script>
